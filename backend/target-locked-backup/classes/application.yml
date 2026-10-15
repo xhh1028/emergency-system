@@ -1,0 +1,25 @@
+server:
+  # 8080 被本机 NIApplicationWebServer 服务占用，因此项目固定使用 8081。
+  port: 8081
+
+spring:
+  application:
+    name: emergency-system-backend
+
+  # 可选读取 backend/.env，本地密钥文件已加入 .gitignore。
+  config:
+    import: optional:file:.env[.properties]
+
+  datasource:
+    url: jdbc:mysql://${DB_HOST}:${DB_PORT:3306}/${DB_NAME}?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&useSSL=true
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maximum-pool-size: 5
+      minimum-idle: 1
+      connection-timeout: 10000
+
+  # JSON 日期默认使用中国时区，方便后续业务接口直接复用。
+  jackson:
+    time-zone: Asia/Shanghai

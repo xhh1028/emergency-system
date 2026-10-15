@@ -1,0 +1,333 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+  background: #1c1c1e;
+  color: rgba(255,255,255,0.88);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html, body, #app {
+  width: 100%;
+  height: 100%;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+:root {
+  --bg-base: #1c1c1e;
+  --bg-elevated: #2c2c2e;
+  --bg-overlay: #3a3a3c;
+  --bg-glass: rgba(44,44,46,0.72);
+  --border: rgba(255,255,255,0.08);
+  --border-strong: rgba(255,255,255,0.15);
+  --text-primary: rgba(255,255,255,0.92);
+  --text-secondary: rgba(255,255,255,0.55);
+  --text-tertiary: rgba(255,255,255,0.28);
+  --accent: #0a84ff;
+  --accent-hover: #409cff;
+  --red: #ff453a;
+  --orange: #ff9f0a;
+  --green: #30d158;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+}
+
+.el-card {
+  background: var(--bg-elevated) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: var(--radius-lg) !important;
+  box-shadow: none !important;
+  transition: all 0.2s ease !important;
+}
+
+.el-card:hover {
+  border-color: var(--border-strong) !important;
+}
+
+.el-button--primary {
+  background: var(--accent) !important;
+  color: #ffffff !important;
+  border: none !important;
+  font-weight: 600 !important;
+  border-radius: var(--radius-sm) !important;
+}
+
+.el-button--primary:hover {
+  background: var(--accent-hover) !important;
+}
+
+.el-button--default {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border: 1px solid var(--border) !important;
+  color: var(--text-primary) !important;
+  border-radius: var(--radius-sm) !important;
+}
+
+.el-button--default:hover {
+  border-color: var(--border-strong) !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+}
+
+.el-input__wrapper {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: var(--radius-sm) !important;
+  box-shadow: none !important;
+}
+
+.el-input__wrapper:hover {
+  border-color: var(--border-strong) !important;
+}
+
+.el-input__wrapper.is-focus {
+  border-color: rgba(10,132,255,0.6) !important;
+  box-shadow: 0 0 0 3px rgba(10,132,255,0.15) !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+}
+
+.el-input__inner {
+  color: var(--text-primary) !important;
+}
+
+.el-input__inner::placeholder {
+  color: var(--text-tertiary) !important;
+}
+
+.el-table {
+  background: transparent !important;
+  border-radius: var(--radius-md) !important;
+  overflow: hidden;
+}
+
+.el-table th {
+  background: rgba(255, 255, 255, 0.03) !important;
+  color: var(--text-secondary) !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.3px !important;
+  border-bottom: 1px solid var(--border) !important;
+}
+
+.el-table td {
+  border-bottom: 1px solid var(--border) !important;
+  color: var(--text-primary) !important;
+}
+
+/* ===== 表格文字重叠修复 ===== */
+/* 列宽不足时表格主体横向滚动，避免固定操作列覆盖相邻列文字 */
+.el-table__body-wrapper {
+  overflow-x: auto;
+}
+
+/* 单元格长文本自动换行，避免溢出到相邻单元格造成文字重叠 */
+.el-table .cell {
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+.el-table tr:hover>td {
+  background: rgba(255, 255, 255, 0.02) !important;
+}
+
+.el-table__row {
+  background: transparent !important;
+}
+
+.el-table--striped .el-table__row:nth-child(2n) td {
+  background: rgba(255, 255, 255, 0.01) !important;
+}
+
+.el-tag {
+  background: transparent !important;
+  border-width: 1px !important;
+  border-style: solid !important;
+  font-size: 11px !important;
+  font-weight: 500 !important;
+  border-radius: 20px !important;
+  padding: 2px 10px !important;
+}
+
+.el-tag--danger {
+  border-color: rgba(255, 69, 58, 0.35) !important;
+  color: var(--red) !important;
+}
+
+.el-tag--success {
+  border-color: rgba(48, 209, 88, 0.35) !important;
+  color: var(--green) !important;
+}
+
+.el-tag--warning {
+  border-color: rgba(255, 159, 10, 0.35) !important;
+  color: var(--orange) !important;
+}
+
+.el-tag--info {
+  border-color: rgba(255, 255, 255, 0.15) !important;
+  color: var(--text-secondary) !important;
+}
+
+.el-dialog {
+  background: var(--bg-elevated) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: var(--radius-xl) !important;
+}
+
+.el-dialog__header {
+  border-bottom: 1px solid var(--border) !important;
+}
+
+.el-dialog__title {
+  color: var(--text-primary) !important;
+}
+
+.el-select-dropdown {
+  background: var(--bg-elevated) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: var(--radius-md) !important;
+}
+
+.el-select-dropdown__item {
+  color: var(--text-primary) !important;
+}
+
+.el-select-dropdown__item:hover {
+  background: rgba(255, 255, 255, 0.06) !important;
+}
+
+.el-select-dropdown__item.selected {
+  color: var(--accent) !important;
+}
+
+.el-pagination {
+  color: var(--text-secondary) !important;
+}
+
+.el-pagination button {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border-radius: var(--radius-sm) !important;
+}
+
+.el-pager li {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border-radius: var(--radius-sm) !important;
+  color: var(--text-secondary) !important;
+}
+
+.el-pager li:hover {
+  color: var(--text-primary) !important;
+}
+
+.el-pager li.is-active {
+  background: var(--accent) !important;
+  color: #ffffff !important;
+}
+
+.el-divider {
+  border-color: var(--border) !important;
+}
+
+.el-divider__text {
+  background: var(--bg-elevated) !important;
+  color: var(--text-secondary) !important;
+}
+
+.el-steps--simple {
+  background: transparent !important;
+}
+
+.el-step__title {
+  color: var(--text-secondary) !important;
+}
+
+.el-step__title.is-finish {
+  color: var(--text-primary) !important;
+}
+
+.el-step__icon {
+  border-color: var(--border-strong) !important;
+}
+
+.el-step__icon.is-text {
+  background: transparent !important;
+  border-color: var(--border-strong) !important;
+  color: var(--text-secondary) !important;
+}
+
+.el-step__icon.is-finish {
+  border-color: var(--accent) !important;
+  color: var(--accent) !important;
+}
+
+.el-timeline-item__node {
+  background: var(--text-tertiary) !important;
+}
+
+.el-timeline-item__content {
+  color: var(--text-primary) !important;
+}
+
+.el-breadcrumb {
+  color: var(--text-secondary) !important;
+}
+
+.el-breadcrumb__separator {
+  color: var(--text-tertiary) !important;
+}
+
+.el-breadcrumb__inner {
+  color: var(--text-secondary) !important;
+}
+
+.el-breadcrumb__inner.is-link:hover {
+  color: var(--text-primary) !important;
+}
+
+.el-breadcrumb__item:last-child .el-breadcrumb__inner {
+  color: var(--text-primary) !important;
+}
+
+.el-dropdown-menu {
+  background: var(--bg-elevated) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: var(--radius-md) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4) !important;
+}
+
+.el-dropdown-menu__item {
+  color: var(--text-primary) !important;
+}
+
+.el-dropdown-menu__item:hover {
+  background: rgba(255, 255, 255, 0.06) !important;
+}
+
+.el-popper.is-dark {
+  background: var(--bg-elevated) !important;
+  border: 1px solid var(--border) !important;
+  color: var(--text-primary) !important;
+}

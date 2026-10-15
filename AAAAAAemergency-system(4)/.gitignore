@@ -1,0 +1,19 @@
+# 前端构建与依赖
+frontend/node_modules/
+frontend/dist/
+
+# 后端构建产物
+backend/target/
+backend/target-locked-backup/
+backend/uploads/
+.verify-backend/
+
+# 项目内 Maven 工具包
+.tools/
+
+# 本地数据库密钥配置（禁止提交）
+backend/.env
+backend/application-local.yml
+
+# 本地审阅与数据库结构检查临时目录
+.tmp-*/

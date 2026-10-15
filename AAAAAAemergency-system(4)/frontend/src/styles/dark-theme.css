@@ -1,0 +1,25 @@
+html.dark {
+  --metro-bg-primary: #0a0a0f;
+  --metro-bg-secondary: #111118;
+  --metro-bg-card: rgba(255, 255, 255, 0.04);
+  --metro-bg-card-hover: rgba(255, 255, 255, 0.07);
+  --metro-bg-sidebar: #111118;
+  --metro-bg-header: #111118;
+  --metro-bg-content: #0a0a0f;
+
+  --metro-border: rgba(255, 255, 255, 0.08);
+  --metro-border-light: rgba(255, 255, 255, 0.06);
+
+  --metro-accent: #00e5ff;
+  --metro-accent-light: rgba(0, 229, 255, 0.1);
+  --metro-secondary: #7c5cfc;
+  --metro-success: #00d68f;
+  --metro-warning: #ffb347;
+  --metro-danger: #ff4d6d;
+
+  --metro-text-primary: rgba(255, 255, 255, 0.9);
+  --metro-text-secondary: rgba(255, 255, 255, 0.45);
+  --metro-text-muted: rgba(255, 255, 255, 0.35);
+
+  color-scheme: dark;
+}
