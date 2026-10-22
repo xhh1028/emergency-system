@@ -1,1 +1,8 @@
+com\metro\emergency\service\AnswerValidationServiceTest.class
+com\metro\emergency\service\RigidWorkflowRuleServiceTest.class
+com\metro\emergency\service\DispatchAnswerGateTest.class
+com\metro\emergency\service\StationEmergencyWorkflowTest.class
 com\metro\emergency\controller\AuthControllerTest.class
+com\metro\emergency\config\SchemaCompatibilityMigrationTest.class
+com\metro\emergency\controller\AnswerWorkflowAccessTest.class
+com\metro\emergency\service\AiCandidateAnswerServiceTest.class

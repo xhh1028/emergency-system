@@ -1,0 +1,17 @@
+venv/
+.venv/
+__pycache__/
+*.pyc
+*.bak_*
+_baseline_run.txt
+*.log
+chroma_db/
+chroma_db.bak/
+models/
+long_data/
+short_data/
+output/
+_archive/
+.idea/
+.vscode/
+~$* 

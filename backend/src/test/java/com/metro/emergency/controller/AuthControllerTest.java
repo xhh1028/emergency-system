@@ -3,10 +3,12 @@ package com.metro.emergency.controller;
 import com.metro.emergency.dto.EventReportResponse;
 import com.metro.emergency.repository.EventRepository;
 import com.metro.emergency.repository.DispatchWorkflowRepository;
+import com.metro.emergency.repository.PlanRepository;
 import com.metro.emergency.repository.StationWorkflowRepository;
 import com.metro.emergency.repository.TaskExecutionRepository;
 import com.metro.emergency.repository.UserAccount;
 import com.metro.emergency.repository.UserRepository;
+import com.metro.emergency.repository.WorkflowArtifactRepository;
 import com.metro.emergency.security.PasswordHasher;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,6 +30,7 @@ import java.util.LinkedHashMap;
 import static org.mockito.Mockito.when;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -57,6 +60,12 @@ class AuthControllerTest {
 
     @MockBean
     private EventRepository eventRepository;
+
+    @MockBean
+    private PlanRepository planRepository;
+
+    @MockBean
+    private WorkflowArtifactRepository workflowArtifactRepository;
 
     @MockBean
     private StationWorkflowRepository stationWorkflowRepository;
@@ -187,7 +196,7 @@ class AuthControllerTest {
         when(eventRepository.findStationId(1L)).thenReturn(1L);
         when(eventRepository.insertEvent(
                 anyString(), anyString(), anyString(), anyLong(), anyString(), anyString(),
-                anyString(), anyString(), anyLong()))
+                anyString(), anyString(), anyLong(), anyBoolean()))
                 .thenReturn(new EventReportResponse(8L, "EV-TEST-0001", "PENDING_ASSIGN"));
         when(eventRepository.updateAiAssessment(eq(8L), any())).thenReturn(1);
 
@@ -265,7 +274,7 @@ class AuthControllerTest {
         String token = stationToken();
         when(stationWorkflowRepository.findUserScope(2L))
                 .thenReturn(new StationWorkflowRepository.UserScope(1L, "STATION"));
-        when(stationWorkflowRepository.findTaskProgress(1L, "COMPLETED", null, 1, 10))
+        when(stationWorkflowRepository.findTaskProgress(1L, null, "COMPLETED", null, 1, 10))
                 .thenReturn(new com.metro.emergency.dto.PageResponse<>(List.of(), 0, 1, 10));
 
         mockMvc.perform(get("/api/station/tasks/progress")
@@ -431,6 +440,7 @@ class AuthControllerTest {
         when(taskExecutionRepository.findRole(3L)).thenReturn("FRONT");
         Map<String, Object> pending = new LinkedHashMap<>();
         pending.put("id", 21L);
+        pending.put("eventId", 12L);
         pending.put("rawStatus", "PENDING");
         Map<String, Object> progressing = new LinkedHashMap<>(pending);
         progressing.put("rawStatus", "IN_PROGRESS");
@@ -450,6 +460,7 @@ class AuthControllerTest {
         when(taskExecutionRepository.findRole(3L)).thenReturn("FRONT");
         Map<String, Object> progressing = new LinkedHashMap<>();
         progressing.put("id", 21L);
+        progressing.put("eventId", 12L);
         progressing.put("rawStatus", "IN_PROGRESS");
         Map<String, Object> completed = new LinkedHashMap<>(progressing);
         completed.put("rawStatus", "COMPLETED");

@@ -1,0 +1,91 @@
+﻿规程库就绪：emergency_rag 共 2325 条手册切片
+案例库就绪：historical_cases 共 80 个案例
+=== 常量 ===
+  FORCE_MAX_PER_SOURCE = 10
+  FORCE_MAX_PER_AIEP   = 6
+  FORCE_BUDGET_PRIORITY= 40
+  FORCE_BUDGET_MANUAL  = 30
+  FORCE_MAX_TOTAL      = 70
+
+=== 算术关系 ===
+  过滤后来源数 filtered        = 68
+  单源截断后候选总条数         = 333
+  截断前原始候选总条数         = 743
+  ↳ 被单源上限直接砍掉的条数   = 410
+  实际取用 total_items        = 70
+  dropped = 候选 - 取用        = 333 - 70 = 263
+  进入上下文的来源 entered     = 34
+
+=== 丢弃条数分布（来源数按 n 分组）===
+   n=6   :  18 个来源
+   n=5   :  19 个来源
+   n=4   :   8 个来源
+   n=3   :   4 个来源
+   n=2   :   2 个来源
+   n=1   :  12 个来源
+   n=0   :   5 个来源
+
+=== 全部被丢弃来源（生产次序，n 降序，共 63 个，不截断）===
+  1. AIEP12_12B2_chunks.jsonl                       n=6   ← 生产日志里的 top10
+  2. AIEP12_12B3_chunks.jsonl                       n=6   ← 生产日志里的 top10
+  3. AIEP12_12C1_chunks.jsonl                       n=6   ← 生产日志里的 top10
+  4. AIEP12_12D1_chunks.jsonl                       n=6   ← 生产日志里的 top10
+  5. AIEP12_12D2_chunks.jsonl                       n=6   ← 生产日志里的 top10
+  6. AIEP12_12D3_chunks.jsonl                       n=6   ← 生产日志里的 top10
+  7. AIEP14_14A2_chunks.jsonl                       n=6   ← 生产日志里的 top10
+  8. AIEP28_28C_chunks.jsonl                        n=6   ← 生产日志里的 top10
+  9. AIEP28_28D_chunks.jsonl                        n=6   ← 生产日志里的 top10
+ 10. AIEP27_27A_chunks.jsonl                        n=6   ← 生产日志里的 top10
+ 11. AIEP28_28E_chunks.jsonl                        n=6
+ 12. AIEP02_2E2_chunks.jsonl                        n=6
+ 13. AIEP03_3A2_chunks.jsonl                        n=6
+ 14. AIEP12_12A8_chunks.jsonl                       n=6
+ 15. AIEP14_14A_chunks.jsonl                        n=6
+ 16. AIEP27_27D_chunks.jsonl                        n=6
+ 17. AIEP28_28B_chunks.jsonl                        n=6
+ 18. AIEP28_28G_chunks.jsonl                        n=6
+ 19. AIEP28_28A_chunks.jsonl                        n=5
+ 20. AIEP07_7C_chunks.jsonl                         n=5
+ 21. AIEP12_12C2_chunks.jsonl                       n=5
+ 22. AIEP27_27C_chunks.jsonl                        n=5
+ 23. AIEP02_2D_chunks.jsonl                         n=5
+ 24. AIEP07_7D1_chunks.jsonl                        n=5
+ 25. AIEP02_2B2_chunks.jsonl                        n=5
+ 26. AIEP02_2B3_chunks.jsonl                        n=5
+ 27. AIEP03_3A_chunks.jsonl                         n=5
+ 28. AIEP07_7A1_chunks.jsonl                        n=5
+ 29. AIEP07_7A2_chunks.jsonl                        n=5
+ 30. AIEP07_7B_chunks.jsonl                         n=5
+ 31. AIEP07_7D2_chunks.jsonl                        n=5
+ 32. AIEP07_7D3_chunks.jsonl                        n=5
+ 33. AIEP12_12A2_chunks.jsonl                       n=5
+ 34. AIEP12_12A5_chunks.jsonl                       n=5
+ 35. AIEP12_12A6_chunks.jsonl                       n=5
+ 36. AIEP12_12A7_chunks.jsonl                       n=5
+ 37. AIEP12_12A_chunks.jsonl                        n=5
+ 38. AIEP02_2C_chunks.jsonl                         n=4
+ 39. AIEP03_3A3_chunks.jsonl                        n=4
+ 40. AIEP11_11A_chunks.jsonl                        n=4
+ 41. AIEP27_27B_chunks.jsonl                        n=4
+ 42. AIEP02_2A_chunks.jsonl                         n=4
+ 43. AIEP02_2B5_chunks.jsonl                        n=4
+ 44. AIEP02_2B7_chunks.jsonl                        n=4
+ 45. AIEP11_11A1_chunks.jsonl                       n=4
+ 46. AIEP12_12A3_chunks.jsonl                       n=3
+ 47. AIEP02_2B4_chunks.jsonl                        n=3
+ 48. AIEP12_12A4_chunks.jsonl                       n=3
+ 49. AIEP12_12B1_chunks.jsonl                       n=3
+ 50. AIEP02_2B8_chunks.jsonl                        n=2
+ 51. AIEP11_11A2_chunks.jsonl                       n=2
+ 52. AIEP02_2B1_chunks.jsonl                        n=1
+ 53. AIEP02_2B6_chunks.jsonl                        n=1
+ 54. AIEP11_11A3_chunks.jsonl                       n=1
+ 55. AIEP12_toc_chunks.jsonl                        n=1
+ 56. AIEP28_toc_chunks.jsonl                        n=1
+ 57. AIEP03_toc_chunks.jsonl                        n=1
+ 58. AIEP28_28F_chunks.jsonl                        n=1
+ 59. AIEP02_2B9_chunks.jsonl                        n=1
+ 60. AIEP02_2E1_chunks.jsonl                        n=1
+ 61. AIEP02_toc_chunks.jsonl                        n=1
+ 62. AIEP07_toc_chunks.jsonl                        n=1
+ 63. AIEP14_toc_chunks.jsonl                        n=1

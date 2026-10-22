@@ -1,6 +1,37 @@
 # 城市轨道交通应急系统后端
 
-当前后端使用 Spring Boot 3.3、Java 17、Maven 和阿里云 RDS MySQL。用户、角色、岗位与车站信息直接读取现有的 `sys_user`、`sys_role`、`station_post`、`station`；事件历史读取 `event`、`task`、`feedback`。程序不会新建或删除业务表；启动时仅为既有 `event`、`task` 表补充本系统所需且缺失的兼容字段。
+## 本机 MySQL（首次配置）
+
+项目使用 MySQL 8。请确认 Windows 服务 `MySQL808` 正在运行，在 `backend/.env.local` 中填写该本机 MySQL 账号的密码。该文件已加入 Git 忽略列表；不要把密码发到聊天或提交到版本库。后端从 `backend` 目录启动，因此可以读取该文件。
+
+第一次使用前，先用 MySQL Workbench 的 root 管理员连接本机 MySQL：新建一个空 schema，名称为 `subway_system_local`，字符集选择 `utf8mb4`，排序规则选择 `utf8mb4_0900_ai_ci`。随后打开 Workbench 查询窗口，替换下方密码，并执行 SQL，创建只供项目使用的数据库账号：
+
+```sql
+CREATE USER 'emergency_app'@'localhost' IDENTIFIED BY '请替换为自己的强密码';
+CREATE USER 'emergency_app'@'127.0.0.1' IDENTIFIED BY '请替换为自己的强密码';
+GRANT ALL PRIVILEGES ON subway_system_local.* TO 'emergency_app'@'localhost';
+GRANT ALL PRIVILEGES ON subway_system_local.* TO 'emergency_app'@'127.0.0.1';
+```
+
+随后把 `backend/.env.local` 里的 `DB_USERNAME` 改成 `emergency_app`，`DB_PASSWORD` 改成同一个密码。账号创建完成后，在 `backend/.env.local` 填写该数据库账号和密码，保存后运行导入脚本。如果你选择直接用 MySQL `root` 账号，则可保留配置里的账号名，但只能填写正确的本机 root 密码。
+
+把提供的 `All.sql` 放到 `backend/database/All.sql`，在 PowerShell 运行：
+
+```powershell
+cd backend
+./database/import-local.ps1
+```
+
+导入工具只连接本机数据库；目标库已有任何表时会停止，保护现有数据。导入完成后，可以在 MySQL Workbench 连接 `127.0.0.1:3306`，查看 `subway_system_local`。核对表和记录数而不导入时，运行 `./database/import-local.ps1 -CheckOnly`。
+
+启动后端：
+
+```powershell
+cd backend
+./start_backend.bat
+```
+
+默认端口为 `8081`；前端 Vite 已配置把 `/api` 请求代理至此端口。后端需要 Java 17 及 Maven。
 
 ## 启动
 
@@ -8,17 +39,17 @@
 
 ```powershell
 cd backend
-mvn.cmd spring-boot:run
+./start_backend.bat
 ```
 
-数据库连接信息可写在不会提交到版本库的 `backend/.env` 中，格式参考 `.env.example`：
+数据库连接信息写在不会提交到版本库的 `backend/.env.local`，格式如下：
 
 ```properties
-DB_HOST=数据库地址
+DB_HOST=127.0.0.1
 DB_PORT=3306
-DB_NAME=subway_system
-DB_USERNAME=team01
-DB_PASSWORD=数据库密码
+DB_NAME=subway_system_local
+DB_USERNAME=emergency_app
+DB_PASSWORD=本机数据库密码
 ```
 
 进入项目的 `frontend` 目录运行 `npm.cmd run dev` 后，Vite 会把 `/api` 和 `/uploads` 转发到 `http://localhost:8081`。

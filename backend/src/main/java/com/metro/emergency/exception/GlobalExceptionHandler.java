@@ -24,8 +24,8 @@ public class GlobalExceptionHandler {
         return ApiResponse.failure(400, message);
     }
 
-    @ExceptionHandler(IllegalArgumentException.class)
-    public ApiResponse<Void> handleIllegalArgumentException(IllegalArgumentException exception) {
+    @ExceptionHandler({IllegalArgumentException.class, IllegalStateException.class})
+    public ApiResponse<Void> handleIllegalArgumentException(RuntimeException exception) {
         return ApiResponse.failure(400, exception.getMessage());
     }
 

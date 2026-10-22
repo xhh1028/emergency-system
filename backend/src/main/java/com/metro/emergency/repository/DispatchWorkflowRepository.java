@@ -51,7 +51,10 @@ public class DispatchWorkflowRepository {
                                e.is_withdraw,u.id reporter_id,
                                s.station_name,s.line_name,u.real_name reporter_name,
                                (SELECT COUNT(*) FROM task t WHERE t.event_id=e.id) task_count,
-                               (SELECT COUNT(*) FROM task t WHERE t.event_id=e.id AND t.task_status='COMPLETED') completed_count
+                               (SELECT COUNT(*) FROM task t WHERE t.event_id=e.id AND t.task_status='COMPLETED') completed_count,
+                               (SELECT COUNT(*) FROM task t WHERE t.event_id=e.id AND t.task_status='COMPLETED'
+                                  AND NOT EXISTS (SELECT 1 FROM feedback f WHERE f.task_id=t.id
+                                                  AND TRIM(COALESCE(f.feedback_text,''))<>'')) missing_feedback_count
                         """ + from + where + " ORDER BY e.create_time DESC LIMIT ? OFFSET ?",
                 (rs, row) -> eventMap(rs), listArgs.toArray());
         return new PageResponse<>(list, total == null ? 0 : total, page, size);
@@ -65,7 +68,10 @@ public class DispatchWorkflowRepository {
                        e.is_withdraw,u.id reporter_id,
                        s.station_name,s.line_name,u.real_name reporter_name,
                        (SELECT COUNT(*) FROM task t WHERE t.event_id=e.id) task_count,
-                       (SELECT COUNT(*) FROM task t WHERE t.event_id=e.id AND t.task_status='COMPLETED') completed_count
+                       (SELECT COUNT(*) FROM task t WHERE t.event_id=e.id AND t.task_status='COMPLETED') completed_count,
+                       (SELECT COUNT(*) FROM task t WHERE t.event_id=e.id AND t.task_status='COMPLETED'
+                          AND NOT EXISTS (SELECT 1 FROM feedback f WHERE f.task_id=t.id
+                                          AND TRIM(COALESCE(f.feedback_text,''))<>'')) missing_feedback_count
                 FROM event e JOIN station s ON s.id=e.station_id JOIN sys_user u ON u.id=e.reporter_id
                 WHERE e.id=? AND e.event_status IN ('PENDING','PENDING_ASSIGN','STATION_HANDLE','REPORTED_TO_DISPATCH','FINISHED')
                 """, (rs, row) -> eventMap(rs), eventId);
@@ -73,7 +79,8 @@ public class DispatchWorkflowRepository {
         Map<String, Object> event = rows.get(0);
         event.put("plans", findPlans(String.valueOf(event.get("eventType")), String.valueOf(event.get("aiLevel"))));
         event.put("commands", jdbcTemplate.query("""
-                SELECT c.id,c.command_content,c.command_time,c.read_status,u.real_name sender_name
+                SELECT c.id,c.command_content,c.command_time,c.read_status,c.answer_id,c.answer_version,
+                       c.validation_id,c.evidence_snapshot,u.real_name sender_name
                 FROM dispatch_command c JOIN sys_user u ON u.id=c.send_user_id
                 WHERE c.event_id=? ORDER BY c.command_time DESC
                 """, (rs, row) -> {
@@ -81,6 +88,10 @@ public class DispatchWorkflowRepository {
             item.put("id", rs.getLong("id")); item.put("content", rs.getString("command_content"));
             item.put("sendTime", rs.getTimestamp("command_time").toLocalDateTime());
             item.put("read", rs.getInt("read_status") == 1); item.put("sender", rs.getString("sender_name"));
+            item.put("answerId", rs.getObject("answer_id", Long.class));
+            item.put("answerVersion", rs.getObject("answer_version", Integer.class));
+            item.put("validationId", rs.getObject("validation_id", Long.class));
+            item.put("evidenceSnapshot", rs.getString("evidence_snapshot"));
             return item;
         }, eventId));
         event.put("tasks", findEventTasks(eventId));
@@ -218,11 +229,21 @@ public class DispatchWorkflowRepository {
                 """, eventId);
     }
 
-    public int insertCommand(long eventId, long senderId, long stationId, String content) {
+    public int insertCommand(long eventId, long senderId, long stationId, String content,
+                             long answerId, int answerVersion, long validationId, String evidenceSnapshot) {
         return jdbcTemplate.update("""
-                INSERT INTO dispatch_command(event_id,send_user_id,receive_station_id,command_content,command_time,read_status)
-                VALUES(?,?,?,?,CURRENT_TIMESTAMP,0)
-                """, eventId, senderId, stationId, content);
+                INSERT INTO dispatch_command(event_id,send_user_id,receive_station_id,command_content,command_time,read_status,
+                                             answer_id,answer_version,validation_id,evidence_snapshot)
+                VALUES(?,?,?,?,CURRENT_TIMESTAMP,0,?,?,?,?)
+                """, eventId, senderId, stationId, content, answerId, answerVersion, validationId, evidenceSnapshot);
+    }
+
+    public boolean existsCommandForAnswer(long eventId, long answerId, int answerVersion) {
+        Integer count = jdbcTemplate.queryForObject("""
+                SELECT COUNT(*) FROM dispatch_command
+                WHERE event_id=? AND answer_id=? AND answer_version=?
+                """, Integer.class, eventId, answerId, answerVersion);
+        return count != null && count > 0;
     }
 
     public int setFinalLevel(long eventId, String finalLevel) {
@@ -412,6 +433,7 @@ public class DispatchWorkflowRepository {
         item.put("stationName", rs.getString("station_name")); item.put("lineName", rs.getInt("line_name"));
         item.put("reporterName", rs.getString("reporter_name")); item.put("taskCount", rs.getInt("task_count"));
         item.put("completedCount", rs.getInt("completed_count"));
+        item.put("missingFeedbackCount", rs.getInt("missing_feedback_count"));
         item.put("reporterId", rs.getObject("reporter_id", Long.class));
         item.put("isWithdraw", rs.getInt("is_withdraw") == 1);
         return item;

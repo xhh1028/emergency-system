@@ -26,16 +26,19 @@ public class EventService {
     private final EventRepository repository;
     private final TokenService tokenService;
     private final AiAssessmentService aiAssessmentService;
+    private final AiCandidateAnswerService aiCandidateAnswerService;
     private final ImageStorageService imageStorageService;
     private final RealtimeNotificationService notificationService;
 
     public EventService(EventRepository repository, TokenService tokenService,
                         AiAssessmentService aiAssessmentService,
+                        AiCandidateAnswerService aiCandidateAnswerService,
                         ImageStorageService imageStorageService,
                         RealtimeNotificationService notificationService) {
         this.repository = repository;
         this.tokenService = tokenService;
         this.aiAssessmentService = aiAssessmentService;
+        this.aiCandidateAnswerService = aiCandidateAnswerService;
         this.imageStorageService = imageStorageService;
         this.notificationService = notificationService;
     }
@@ -84,6 +87,8 @@ public class EventService {
         if (repository.updateAiAssessment(response.id(), assessment) != 1) {
             throw new IllegalStateException("事件已保存，但 AI 研判结果写入失败");
         }
+        aiCandidateAnswerService.createCandidate(response.id(), eventType, description,
+                reportedLevel, assessment, identity.userId());
         // 流转日志：紧急标记 + AI 研判结果
         repository.insertEventLog(response.id(), "REPORT", assessment.level(), null,
                 (isEmergency ? "紧急险情" : "普通险情") + "上报", identity.userId());

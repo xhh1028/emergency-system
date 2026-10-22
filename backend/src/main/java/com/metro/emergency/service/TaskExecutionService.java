@@ -2,6 +2,7 @@ package com.metro.emergency.service;
 
 import com.metro.emergency.dto.PageResponse;
 import com.metro.emergency.repository.TaskExecutionRepository;
+import com.metro.emergency.repository.WorkflowArtifactRepository;
 import com.metro.emergency.security.TokenService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,6 +11,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
 
 /** 一线执行与后勤安保人员共用的任务执行业务。 */
 @Service
@@ -21,14 +24,17 @@ public class TaskExecutionService {
     private final TokenService tokenService;
     private final ImageStorageService imageStorageService;
     private final RealtimeNotificationService notificationService;
+    private final WorkflowArtifactRepository artifacts;
 
     public TaskExecutionService(TaskExecutionRepository repository, TokenService tokenService,
                                 ImageStorageService imageStorageService,
-                                RealtimeNotificationService notificationService) {
+                                RealtimeNotificationService notificationService,
+                                WorkflowArtifactRepository artifacts) {
         this.repository = repository;
         this.tokenService = tokenService;
         this.imageStorageService = imageStorageService;
         this.notificationService = notificationService;
+        this.artifacts = artifacts;
     }
 
     public PageResponse<Map<String, Object>> myTasks(String authorization, String status,
@@ -57,6 +63,7 @@ public class TaskExecutionService {
         if (repository.startTask(taskId, userId) != 1) {
             throw new IllegalStateException("任务状态已变化，请刷新后重试");
         }
+        appendTaskAudit(task, userId, "TASK_START", "status=IN_PROGRESS", "taskId=" + taskId);
         notificationService.publishAll("任务更新", "应急任务已开始执行",
                 String.valueOf(task.get("taskNo")), "/dispatch/progress");
         return repository.findMyTask(taskId, userId);
@@ -82,6 +89,8 @@ public class TaskExecutionService {
         if (repository.insertFeedback(taskId, text, imageUrls, userId) != 1) {
             throw new IllegalStateException("现场反馈保存失败");
         }
+        appendTaskAudit(task, userId, "TASK_FEEDBACK", text,
+                "taskId=" + taskId + ",status=COMPLETED,imageCount=" + imageCount(imageUrls));
         notificationService.publishAll("任务更新", "应急任务已完成并反馈",
                 String.valueOf(task.get("taskNo")), "/dispatch/progress");
         return repository.findMyTask(taskId, userId);
@@ -94,6 +103,36 @@ public class TaskExecutionService {
             throw new IllegalArgumentException("仅一线执行或后勤安保人员可以操作本人任务");
         }
         return userId;
+    }
+
+    private void appendTaskAudit(Map<String, Object> task, long operatorId, String operation,
+                                 String requestSnapshot, String responseSnapshot) {
+        Object eventIdValue = task.get("eventId");
+        if (!(eventIdValue instanceof Number)) {
+            throw new IllegalStateException("任务缺少事件编号，无法写入可追溯审计记录");
+        }
+        long eventId = ((Number) eventIdValue).longValue();
+        String previous = artifacts.findLatestAuditHash(eventId);
+        String current = sha256(String.valueOf(previous) + "|" + operation + "|" + requestSnapshot
+                + "|" + responseSnapshot);
+        artifacts.appendAudit(eventId, null, null, operation, operatorId,
+                requestSnapshot, responseSnapshot, previous, current);
+    }
+
+    private int imageCount(String imageUrls) {
+        if (imageUrls == null || imageUrls.isBlank()) return 0;
+        return (int) java.util.Arrays.stream(imageUrls.split(";")).map(String::trim).filter(value -> !value.isEmpty()).count();
+    }
+
+    private String sha256(String value) {
+        try {
+            byte[] digest = MessageDigest.getInstance("SHA-256").digest(value.getBytes(StandardCharsets.UTF_8));
+            StringBuilder result = new StringBuilder(64);
+            for (byte item : digest) result.append(String.format("%02x", item));
+            return result.toString();
+        } catch (Exception exception) {
+            throw new IllegalStateException("SHA-256 不可用", exception);
+        }
     }
 
     private void validatePage(int page, int size) {

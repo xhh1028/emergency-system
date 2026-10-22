@@ -2,12 +2,17 @@ com\metro\emergency\controller\RealtimeNotificationController.class
 com\metro\emergency\controller\TaskExecutionController.class
 com\metro\emergency\controller\AuthController.class
 com\metro\emergency\config\SchemaCompatibilityMigration.class
+com\metro\emergency\repository\WorkflowArtifactRepository.class
+com\metro\emergency\service\RigidWorkflowRuleService$CloseDecision.class
 com\metro\emergency\dto\ResetPasswordRequest.class
 com\metro\emergency\service\AuthService.class
+com\metro\emergency\dto\AnswerReviewRequest.class
 com\metro\emergency\dto\StationDecisionResponse.class
 com\metro\emergency\repository\EventRepository.class
+com\metro\emergency\service\AnswerValidationService$ValidationResult.class
 com\metro\emergency\EmergencySystemApplication.class
 com\metro\emergency\dto\DispatchCommandRequest.class
+com\metro\emergency\controller\AnswerWorkflowController.class
 com\metro\emergency\exception\AuthenticationException.class
 com\metro\emergency\repository\TaskExecutionRepository.class
 com\metro\emergency\controller\EventController.class
@@ -15,6 +20,7 @@ com\metro\emergency\dto\PersonnelSaveRequest.class
 com\metro\emergency\service\AiAssessmentService.class
 com\metro\emergency\dto\LoginResponse.class
 com\metro\emergency\common\ApiResponse.class
+com\metro\emergency\service\RigidWorkflowRuleService$StationDecision.class
 com\metro\emergency\dto\PageResponse.class
 com\metro\emergency\security\TokenService$LoginIdentity.class
 com\metro\emergency\service\DispatchWorkflowService.class
@@ -22,6 +28,7 @@ com\metro\emergency\service\EventService.class
 com\metro\emergency\dto\EventReportResponse.class
 com\metro\emergency\repository\StationWorkflowRepository$UserScope.class
 com\metro\emergency\exception\GlobalExceptionHandler.class
+com\metro\emergency\service\AnswerValidationService.class
 com\metro\emergency\controller\DispatchWorkflowController.class
 com\metro\emergency\dto\ChangePasswordRequest.class
 com\metro\emergency\security\TokenService.class
@@ -29,6 +36,7 @@ com\metro\emergency\repository\UserRepository.class
 com\metro\emergency\repository\DispatchWorkflowRepository.class
 com\metro\emergency\dto\TaskDraft.class
 com\metro\emergency\dto\RejectEventRequest.class
+com\metro\emergency\service\AiCandidateAnswerService$CandidateResult.class
 com\metro\emergency\repository\StationWorkflowRepository.class
 com\metro\emergency\repository\UserAccount.class
 com\metro\emergency\dto\TaskEvaluationRequest.class
@@ -36,12 +44,15 @@ com\metro\emergency\dto\LoginRequest.class
 com\metro\emergency\service\RealtimeNotificationService$Client.class
 com\metro\emergency\service\StationWorkflowService.class
 com\metro\emergency\service\RealtimeNotificationService.class
+com\metro\emergency\service\RigidWorkflowRuleService.class
+com\metro\emergency\service\AiCandidateAnswerService.class
 com\metro\emergency\dto\DispatchCloseRequest.class
 com\metro\emergency\dto\TaskBatchResponse.class
 com\metro\emergency\service\AiAssessmentService$Assessment.class
 com\metro\emergency\config\CorsConfig.class
 com\metro\emergency\dto\UserInfo.class
 com\metro\emergency\repository\PlanRepository.class
+com\metro\emergency\service\RigidWorkflowRuleService$CommandDecision.class
 com\metro\emergency\service\TaskExecutionService.class
 com\metro\emergency\dto\StationEventDecisionRequest.class
 com\metro\emergency\service\PlanService.class
@@ -51,5 +62,8 @@ com\metro\emergency\dto\TaskBatchRequest.class
 com\metro\emergency\security\PasswordHasher.class
 com\metro\emergency\service\ImageStorageService.class
 com\metro\emergency\service\StationWorkflowService$PersonnelValues.class
+com\metro\emergency\service\AnswerValidationService$ReviewResult.class
+com\metro\emergency\service\AnswerValidationService$Checks.class
 com\metro\emergency\dto\RoleInfo.class
+com\metro\emergency\service\DispatchWorkflowService$ApprovedAnswer.class
 com\metro\emergency\controller\RealtimeNotificationController$MapProfile.class

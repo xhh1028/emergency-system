@@ -1,1 +1,8 @@
-D:\College_Innovation_Pregram\backend\src\test\java\com\metro\emergency\controller\AuthControllerTest.java
+D:\dachuang\emergency-system\backend\src\test\java\com\metro\emergency\config\SchemaCompatibilityMigrationTest.java
+D:\dachuang\emergency-system\backend\src\test\java\com\metro\emergency\controller\AnswerWorkflowAccessTest.java
+D:\dachuang\emergency-system\backend\src\test\java\com\metro\emergency\controller\AuthControllerTest.java
+D:\dachuang\emergency-system\backend\src\test\java\com\metro\emergency\service\AiCandidateAnswerServiceTest.java
+D:\dachuang\emergency-system\backend\src\test\java\com\metro\emergency\service\AnswerValidationServiceTest.java
+D:\dachuang\emergency-system\backend\src\test\java\com\metro\emergency\service\DispatchAnswerGateTest.java
+D:\dachuang\emergency-system\backend\src\test\java\com\metro\emergency\service\RigidWorkflowRuleServiceTest.java
+D:\dachuang\emergency-system\backend\src\test\java\com\metro\emergency\service\StationEmergencyWorkflowTest.java

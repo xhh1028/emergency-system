@@ -1,0 +1,552 @@
+{
+  "event": {
+    "severity": {
+      "preliminary": {
+        "level": "一般",
+        "confidence": "中",
+        "basis": "上游判定为一般事故，依据《国家城市轨道交通运营突发事件应急预案》7.2，无人员伤亡、无直接经济损失数据，火势不大，仅设备/设施受影响；描述中站台垃圾桶起火、火势不大但烟雾较浓，符合初判一般事故的信号。"
+      },
+      "level": "尚未成立",
+      "correction": "核实是否出现人员重伤/死亡人数、直接经济损失金额、连续中断行车时长；若重伤<10人且损失50万元以上1000万元以下或中断2小时以上6小时以下，按7.2改判为一般事故；若达到更高区间则相应升级。",
+      "tiers": [
+        {
+          "name": "特别重大",
+          "threshold": "死亡≥30人 / 重伤≥100人 / 直接经济损失≥1亿元",
+          "hit": "未命中（缺少死亡人数、重伤人数、直接经济损失数字）"
+        },
+        {
+          "name": "重大",
+          "threshold": "死亡10–29人 / 重伤50–99人 / 直接经济损失5000万–1亿元 / 连续中断行车24小时以上",
+          "hit": "未命中（缺少死亡人数、重伤人数、直接经济损失、连续中断行车时长数字）"
+        },
+        {
+          "name": "较大",
+          "threshold": "死亡3–9人 / 重伤10–49人 / 直接经济损失1000万–5000万元 / 连续中断行车6小时以上24小时以下",
+          "hit": "未命中（缺少死亡人数、重伤人数、直接经济损失、连续中断行车时长数字）"
+        },
+        {
+          "name": "一般",
+          "threshold": "死亡<3人 / 重伤<10人 / 直接经济损失50万元以上1000万元以下 / 连续中断行车2小时以上6小时以下",
+          "hit": "未命中（缺少死亡人数、重伤人数、直接经济损失、连续中断行车时长数字）"
+        }
+      ],
+      "conclusion": "描述中无量化数字，无法精确对照7.2定级，精确判定为尚未成立；上游初判一般事故予以保留，待核实人员伤亡、经济损失和中断行车时长后按7.2修正。"
+    },
+    "response": {
+      "level": "IV",
+      "authority": "事发地城市人民政府",
+      "report_deadline": "接报后30分钟内完成首报，1小时内书面续报"
+    },
+    "impact": "站台局部区域烟雾弥漫，可能影响站台乘客通行和列车正常停靠，需局部封闭并加强通风。",
+    "composite": {
+      "risks": [
+        "站台垃圾桶起火产生明火",
+        "浓烟在站台及相邻区域扩散",
+        "乘客恐慌引发拥挤或踩踏",
+        "烟雾可能触发FAS报警并影响行车组织"
+      ],
+      "interaction": "垃圾桶起火产生浓烟，烟雾扩散降低站台能见度并可能触发火灾报警，进而引发乘客恐慌和拥挤，拥挤又可能阻碍灭火和疏散，形成火情—烟雾—恐慌—通行受阻的放大链条。"
+    }
+  },
+  "steps": [
+    {
+      "n": 2,
+      "action": "使用灭火器扑救垃圾桶起火部位",
+      "how_to": "① 就近取用灭火器；② 从上风向接近火点；③ 对准火焰根部喷射；④ 火势超出可控范围立即撤离并等待消防到场",
+      "action_type": "切断危险源",
+      "stage": "先期处置",
+      "deadline_text": "目标 3 分钟内完成",
+      "role": [
+        "车站员工"
+      ],
+      "role_category": "一线执行",
+      "basis": "AIEP09 9B1 [步骤3]",
+      "parallel_with": [
+        2,
+        3
+      ],
+      "depends_on": [],
+      "fallback": [
+        {
+          "condition": "若火势无法用灭火器控制",
+          "action": "立即撤离至安全区域并等待消防人员到场处置"
+        }
+      ],
+      "secondary_of": null,
+      "case_ref": {
+        "id": "case_3",
+        "note": "充电宝自燃案例中站务员取用消防应急专用水扑灭明火，一分钟内控制火情，可借鉴快速取用就近器材的实操细节。"
+      },
+      "_deps_new": [],
+      "_phr_new": [
+        1
+      ]
+    },
+    {
+      "n": 9,
+      "action": "通过车站广播宣布站台局部疏散并引导乘客远离起火区域",
+      "how_to": "① 广播内容避免引起恐慌；② 引导乘客向站台另一端或站厅方向撤离；③ 优先引导老人、儿童、残障等弱势群体；④ 同步通知站内租户",
+      "action_type": "人身安全",
+      "stage": "扩大响应",
+      "deadline_text": "目标 3 分钟内完成",
+      "role": [
+        "车站员工"
+      ],
+      "role_category": "一线执行",
+      "basis": "AIEP09 9B1 [步骤4]",
+      "parallel_with": [
+        1,
+        3
+      ],
+      "depends_on": [],
+      "fallback": [],
+      "secondary_of": null,
+      "case_ref": {
+        "id": "case_1",
+        "note": "便利店电气火灾案例中车站工作人员启动火灾应急疏散程序并组织站内乘客疏散，可借鉴疏散组织细节。"
+      },
+      "_deps_new": [],
+      "_phr_new": []
+    },
+    {
+      "n": 1,
+      "action": "通知行车调度员站台垃圾桶起火并请求召唤消防；通知行车调度员、站内所有员工、承包商及租户火警已确认为真实火警",
+      "how_to": "① 报告起火位置为站台垃圾桶；② 说明火势不大但烟雾较浓；③ 请求行车调度员召唤消防部门到场；④ 保持与行车调度员通信畅通",
+      "action_type": "信息报告",
+      "stage": "先期处置",
+      "deadline_text": "目标 3 分钟内完成",
+      "role": [
+        "值班站长"
+      ],
+      "role_category": "车站管理",
+      "basis": "AIEP09 9B1 [步骤4]",
+      "parallel_with": [
+        "1",
+        "2",
+        "5",
+        "6",
+        "7",
+        "8"
+      ],
+      "depends_on": [],
+      "fallback": [],
+      "secondary_of": null,
+      "case_ref": null,
+      "deadline_minutes": 30,
+      "_absorbed": true,
+      "_deps_new": [],
+      "_phr_new": [
+        2,
+        3
+      ]
+    },
+    {
+      "n": 5,
+      "action": "从FAS确认火警位置并派车站员工前往现场查看",
+      "how_to": "① 从FAS确认报警具体位置；② 指派1名车站员工前往该范围查看；③ 要求员工携带无线电手持台；④ 实时反馈是否发生火警或触动防火系统",
+      "action_type": "关键设备",
+      "stage": "现场处置",
+      "deadline_text": "目标 3 分钟内完成",
+      "role": [
+        "值班站长",
+        "车站员工"
+      ],
+      "role_category": "车站管理",
+      "basis": "AIEP09 9B1 [步骤1-2]",
+      "parallel_with": [
+        1,
+        2,
+        3
+      ],
+      "depends_on": [],
+      "fallback": [],
+      "secondary_of": null,
+      "case_ref": null,
+      "_deps_new": [],
+      "_phr_new": []
+    },
+    {
+      "n": 6,
+      "action": "启动车站火灾联动工况加强站台排烟通风",
+      "how_to": "① 确认环境与设备监控系统火灾联动工况已触发；② 检查站台排烟风机运行状态；③ 按AIEP11 11A1执行地下车站失火紧急通风安排；④ 观察烟雾扩散方向并调整通风策略",
+      "action_type": "关键设备",
+      "stage": "现场处置",
+      "deadline_text": "目标 5 分钟内完成",
+      "role": [
+        "车站员工"
+      ],
+      "role_category": "一线执行",
+      "basis": "AIEP11 11A1；GB/T 38707 12.7.2",
+      "parallel_with": [
+        6,
+        7
+      ],
+      "depends_on": [
+        4
+      ],
+      "fallback": [],
+      "secondary_of": null,
+      "case_ref": null,
+      "_deps_new": [
+        5
+      ],
+      "_phr_new": []
+    },
+    {
+      "n": 3,
+      "action": "安排车站员工在站台起火区域设置隔离并警告他人远离",
+      "how_to": "① 在起火垃圾桶周围设置隔离带；② 警告乘客和其他人员远离该处；③ 保持与现场安全距离；④ 直至消防人员到场后移交现场",
+      "action_type": "人身安全",
+      "stage": "先期处置",
+      "deadline_text": "目标 5 分钟内完成",
+      "role": [
+        "车站员工"
+      ],
+      "role_category": "一线执行",
+      "basis": "AIEP09 9B1 [步骤3]",
+      "parallel_with": [
+        5,
+        7
+      ],
+      "depends_on": [],
+      "fallback": [],
+      "secondary_of": null,
+      "case_ref": null,
+      "_deps_new": [],
+      "_phr_new": []
+    },
+    {
+      "n": 10,
+      "action": "指引消防人员前往事故控制站并说明现场情况",
+      "how_to": "① 按AIEP01 1C5步骤9指引紧急服务前往事故控制站；② 说明起火位置和烟雾情况；③ 提供站台通道和消防设施位置信息；④ 保持与消防人员通信畅通",
+      "action_type": "人身安全",
+      "stage": "扩大响应",
+      "deadline_text": "目标 10 分钟内完成",
+      "role": [
+        "值班站长"
+      ],
+      "role_category": "车站管理",
+      "basis": "AIEP01 1C5 [步骤9]",
+      "parallel_with": [
+        5,
+        6
+      ],
+      "depends_on": [
+        3
+      ],
+      "fallback": [],
+      "secondary_of": null,
+      "case_ref": null,
+      "_deps_new": [
+        1
+      ],
+      "_phr_new": []
+    },
+    {
+      "n": 7,
+      "action": "按需要手动操作防火系统或确认防火系统已联动",
+      "how_to": "① 确认FAS是否已联动启动防火系统；② 若未联动则手动操作防火系统；③ 确认防火卷帘、排烟等设备动作状态；④ 记录防火系统动作情况",
+      "action_type": "关键设备",
+      "stage": "现场处置",
+      "deadline_text": "目标 5 分钟内完成",
+      "role": [
+        "车站员工"
+      ],
+      "role_category": "一线执行",
+      "basis": "AIEP09 9B1 [步骤3]",
+      "parallel_with": [
+        5,
+        6,
+        7
+      ],
+      "depends_on": [
+        4
+      ],
+      "fallback": [],
+      "secondary_of": null,
+      "case_ref": null,
+      "_deps_new": [
+        5
+      ],
+      "_phr_new": [
+        6
+      ]
+    },
+    {
+      "n": 9,
+      "action": "通知行车调度员、站内所有员工、承包商及租户火警已确认为真实火警",
+      "how_to": "① 向行车调度员通报火警确认情况；② 通知站内所有员工进入应急状态；③ 通知承包商和租户配合疏散和处置；④ 保持信息更新",
+      "action_type": "信息报告",
+      "stage": "现场处置",
+      "deadline_text": "目标 5 分钟内完成",
+      "role": [
+        "值班站长"
+      ],
+      "role_category": "车站管理",
+      "basis": "AIEP09 9B1 [步骤4]",
+      "parallel_with": [
+        5,
+        6,
+        7,
+        8
+      ],
+      "depends_on": [
+        4
+      ],
+      "fallback": [],
+      "secondary_of": null,
+      "case_ref": null
+    },
+    {
+      "n": 4,
+      "action": "按车站疏散程序组织站台乘客向站厅及出入口疏散",
+      "how_to": "① 遵照AIEP09 12B1至B3及12C1车站疏散程序执行；② 开启所有闸机；③ 关停扶梯并派人引导楼梯口；④ 优先疏散老人、儿童、残障等弱势群体",
+      "action_type": "人身安全",
+      "stage": "现场处置",
+      "deadline_text": "目标 15 分钟内完成",
+      "role": [
+        "值班站长",
+        "车站员工"
+      ],
+      "role_category": "车站管理",
+      "basis": "AIEP09 9B1 [步骤4]；AIEP09 12B1至B3及12C1",
+      "parallel_with": [
+        11
+      ],
+      "depends_on": [
+        2
+      ],
+      "fallback": [],
+      "secondary_of": null,
+      "case_ref": {
+        "id": "case_1",
+        "note": "便利店电气火灾案例中启动二级应急响应并组织站内乘客疏散，可借鉴疏散组织细节。"
+      },
+      "_deps_new": [
+        9
+      ],
+      "_phr_new": [
+        8
+      ]
+    },
+    {
+      "n": 8,
+      "action": "执行站台客流控制措施防止拥挤",
+      "how_to": "① 在站台客流控制点设置引导；② 改变扶梯走向疏导客流；③ 设置回形线路控制进站速度；④ 必要时关闭部分进站闸机",
+      "action_type": "运营调整",
+      "stage": "现场处置",
+      "deadline_text": "目标 15 分钟内完成",
+      "role": [
+        "车站员工"
+      ],
+      "role_category": "一线执行",
+      "basis": "GB/T 38707 14.2.15",
+      "parallel_with": [
+        10
+      ],
+      "depends_on": [],
+      "fallback": [],
+      "secondary_of": null,
+      "case_ref": null,
+      "_deps_new": [],
+      "_phr_new": [
+        4
+      ]
+    },
+    {
+      "n": 11,
+      "action": "向值班经理报告事故情况并建议宣布进入运营紧急状态",
+      "how_to": "① 报告事故性质为站台垃圾桶起火；② 报告已采取的先期处置措施；③ 报告是否需要启动运营紧急状态；④ 按AIEP01 1C5步骤执行后续通报",
+      "action_type": "信息报告",
+      "stage": "扩大响应",
+      "deadline_text": "目标 15 分钟内完成",
+      "role": [
+        "值班站长"
+      ],
+      "role_category": "车站管理",
+      "basis": "AIEP01 1C5 [步骤1-12]",
+      "parallel_with": [
+        10,
+        11
+      ],
+      "depends_on": [
+        3
+      ],
+      "fallback": [],
+      "secondary_of": null,
+      "case_ref": null,
+      "_deps_new": [
+        1
+      ],
+      "_phr_new": []
+    },
+    {
+      "n": 12,
+      "action": "确认火情已扑灭且无复燃风险后清理现场",
+      "how_to": "① 会同消防人员确认火情已完全扑灭；② 检查垃圾桶及周边有无复燃风险；③ 清理现场积水和烧损物品；④ 记录设备受损情况",
+      "action_type": "恢复善后",
+      "stage": "恢复善后",
+      "deadline_text": "目标 30 分钟内完成",
+      "role": [
+        "车站员工"
+      ],
+      "role_category": "一线执行",
+      "basis": "AIEP09 9B1 [步骤3]",
+      "parallel_with": [
+        14
+      ],
+      "depends_on": [
+        1,
+        7
+      ],
+      "fallback": [],
+      "secondary_of": null,
+      "case_ref": {
+        "id": "case_3",
+        "note": "充电宝自燃案例中值班站长与民警核查复燃和次生风险后开展清理，可借鉴复燃核查细节。"
+      },
+      "_deps_new": [
+        2,
+        10
+      ],
+      "_phr_new": [
+        13
+      ]
+    },
+    {
+      "n": 13,
+      "action": "确认站台安全后恢复车站正常运营",
+      "how_to": "① 确认站台无烟雾、无明火、无安全隐患；② 确认设备设施运行正常；③ 通知行车调度员恢复运营；④ 撤除客流控制措施并恢复正常进出站",
+      "action_type": "恢复善后",
+      "stage": "恢复善后",
+      "deadline_text": "目标 60 分钟内完成",
+      "role": [
+        "值班站长"
+      ],
+      "role_category": "车站管理",
+      "basis": "AIEP09 9B1 [步骤4]",
+      "parallel_with": [
+        13
+      ],
+      "depends_on": [
+        13
+      ],
+      "fallback": [],
+      "secondary_of": null,
+      "case_ref": null,
+      "_deps_new": [
+        12
+      ],
+      "_phr_new": [
+        12
+      ]
+    }
+  ],
+  "escalation": {
+    "applicable": true,
+    "current_level": "IV",
+    "triggers": [
+      {
+        "condition": "重伤≥10人",
+        "target_level": "III",
+        "basis": "7.2 较大事件"
+      },
+      {
+        "condition": "死亡≥3人",
+        "target_level": "III",
+        "basis": "7.2 较大事件"
+      },
+      {
+        "condition": "直接经济损失≥1000万元",
+        "target_level": "III",
+        "basis": "7.2 较大事件"
+      },
+      {
+        "condition": "连续中断行车≥6小时",
+        "target_level": "III",
+        "basis": "7.2 较大事件"
+      }
+    ],
+    "extra_steps": [
+      {
+        "action": "向事发地城市人民政府报告并请求启动III级应急响应",
+        "role": [
+          "值班经理"
+        ],
+        "role_category": "车站管理",
+        "basis": "《国家城市轨道交通运营突发事件应急预案》4.1"
+      },
+      {
+        "action": "调配增援人员到场协助疏散和处置",
+        "role": [
+          "值班经理"
+        ],
+        "role_category": "车站管理",
+        "basis": "AIEP01 1C5 [步骤4]"
+      },
+      {
+        "action": "通知公交总队并说明事故控制站位置及现场人员信息",
+        "role": [
+          "值班经理"
+        ],
+        "role_category": "车站管理",
+        "basis": "AIEP01 1C5 [步骤10]"
+      }
+    ]
+  },
+  "dimensions": {
+    "evacuation": {
+      "path": "站台乘客向站厅方向疏散，经出入口撤离至站外安全区域",
+      "meeting_point": "车站出入口外指定集合点",
+      "priority": "老人、儿童、残障人士及受伤人员优先疏散",
+      "basis": "AIEP09 9B1 [步骤4]；AIEP09 12B1至B3及12C1"
+    },
+    "shutdown": {
+      "entrances": "根据火情和烟雾扩散情况，必要时关闭部分出入口",
+      "section_or_line": "若火情影响行车安全，由行车调度员决定是否区段或线路停运",
+      "basis": "AIEP09 9B1 [步骤4]；AIEP01 1C5 [步骤12]"
+    },
+    "reporting": {
+      "target": "行车调度员、值班经理、TCC及相关政府部门",
+      "deadline": "接报后30分钟内完成首报，1小时内书面续报",
+      "format": "按AIEP01 1B报告事故概述格式执行",
+      "basis": "AIEP01 1B；AIEP01 1C5 [步骤11]"
+    },
+    "crowd_control": {
+      "measures": [
+        "在站台客流控制点设置引导",
+        "改变扶梯走向疏导客流",
+        "设置回形线路控制进站速度",
+        "必要时关闭部分进站闸机"
+      ],
+      "basis": "GB/T 38707 14.2.15"
+    }
+  },
+  "cautions": [
+    "禁止在火势超出可控范围时继续使用灭火器扑救，应立即撤离并等待消防人员到场",
+    "禁止在未确认火情完全扑灭且无复燃风险的情况下恢复运营",
+    "禁止在疏散过程中使用电梯，应引导乘客使用楼梯"
+  ],
+  "sources": [
+    {
+      "ref": "AIEP09 9B1 [步骤1-4]",
+      "kind": "规程"
+    },
+    {
+      "ref": "AIEP11 11A1",
+      "kind": "规程"
+    },
+    {
+      "ref": "AIEP01 1C5 [步骤1-12]",
+      "kind": "规程"
+    },
+    {
+      "ref": "GB/T 38707 12.7.2",
+      "kind": "规范"
+    },
+    {
+      "ref": "GB/T 38707 14.2.15",
+      "kind": "规范"
+    }
+  ]
+}

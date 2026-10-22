@@ -22,20 +22,21 @@ import java.util.Set;
 @Service
 public class StationWorkflowService {
 
-    private static final Set<String> LEVELS = Set.of("GENERAL", "SERIOUS", "EXTREMELY_SERIOUS");
-    private static final Set<String> ROUTES = Set.of("TASK_ASSIGN", "DISPATCH");
     private final StationWorkflowRepository repository;
     private final TokenService tokenService;
     private final PasswordHasher passwordHasher;
     private final RealtimeNotificationService notificationService;
+    private final RigidWorkflowRuleService rigidRules;
 
     public StationWorkflowService(StationWorkflowRepository repository, TokenService tokenService,
                                   PasswordHasher passwordHasher,
-                                  RealtimeNotificationService notificationService) {
+                                  RealtimeNotificationService notificationService,
+                                  RigidWorkflowRuleService rigidRules) {
         this.repository = repository;
         this.tokenService = tokenService;
         this.passwordHasher = passwordHasher;
         this.notificationService = notificationService;
+        this.rigidRules = rigidRules;
     }
 
     public PageResponse<Map<String, Object>> events(String authorization, String status,
@@ -59,26 +60,17 @@ public class StationWorkflowService {
                                            StationEventDecisionRequest request) {
         long stationId = requireStationManager(authorization);
         long operatorId = tokenService.requireIdentity(authorization).userId();
-        if (request == null || !LEVELS.contains(request.level())) {
-            throw new IllegalArgumentException("复核等级不正确");
-        }
-        if (!ROUTES.contains(request.route())) {
-            throw new IllegalArgumentException("后续处置路径不正确");
-        }
         Map<String, Object> event = repository.findStationEvent(eventId, stationId);
         if (event == null) {
             throw new IllegalArgumentException("事件不存在或不属于当前车站");
         }
-        // 已驳回的事件必须先由一线补全重新提交，不能直接定级
-        String currentStatus = String.valueOf(event.get("status"));
-        if (!Set.of("PENDING", "CONFIRMED").contains(currentStatus)) {
-            throw new IllegalStateException("当前事件状态不允许定级操作");
-        }
+        String requestedLevel = request == null ? null : request.level();
+        String requestedRoute = request == null ? null : request.route();
+        RigidWorkflowRuleService.StationDecision decision = rigidRules
+                .validateStationDecision(event, requestedLevel, requestedRoute);
         boolean emergency = Boolean.TRUE.equals(event.get("isEmergency"));
-        String level = request.level();
-        // 定级结果为较重/严重（SERIOUS/EXTREMELY_SERIOUS）时，无论是否紧急都必须上报调度指挥中心确认
-        boolean mustReport = "SERIOUS".equals(level) || "EXTREMELY_SERIOUS".equals(level);
-        boolean upReport = mustReport || "DISPATCH".equals(request.route());
+        String level = decision.level();
+        boolean upReport = decision.reportToDispatch();
         String status = upReport ? "REPORTED_TO_DISPATCH" : "STATION_HANDLE";
         if (repository.decide(eventId, stationId, level, status, upReport) != 1) {
             throw new IllegalStateException("事件复核失败");

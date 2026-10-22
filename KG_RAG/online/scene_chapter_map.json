@@ -1,0 +1,173 @@
+{
+  "_merge_rule": {
+    "allowed_union": true,
+    "forbidden_intersect": true,
+    "comment": "复合事件时：allowed取并集，forbidden取交集"
+  },
+  "_pins_rule": {
+    "comment": "pins：必须优先进入上下文的条款号（如 7.2 = 《国家轨道交通运营突发事件应急预案》分级标准四档，14.2.15 = GB/T 38707 大客流管控措施）。仅对强制拉入的排序生效，缺失/为空不影响检索。",
+    "note": "按实测逐场景登记——pin 只有在场景的强制拉入清单包含该条款所在文档时才生效；未列出的场景 pin 为空。"
+  },
+
+  "站内失火": {
+    "allowed": ["AIEP09_9B1", "AIEP09_9A", "AIEP11_11A1", "AIEP12_12B", "AIEP09_9B2"],
+    "forbidden": ["AIEP15", "AIEP08_8B5", "AIEP08_8B6", "AIEP09_9B3", "AIEP07_7D", "AIEP10"],
+    "pins": ["7.2"]
+  },
+  "气体泄漏": {
+    "allowed": ["AIEP08_8C3", "AIEP08_8C4", "AIEP08_8C1", "AIEP08_8C2",
+                "AIEP11_11A", "AIEP12_12B", "AIEP03_3A"],
+    "forbidden": ["AIEP15", "AIEP10"],
+    "pins": []
+  },
+  "站外失火": {
+    "allowed": ["AIEP09_9B3", "AIEP11_11A2", "AIEP15_15A2"],
+    "forbidden": ["AIEP09_9B1", "AIEP09_9C", "AIEP10", "AIEP07_7D"]
+  },
+  "列车失火": {
+    "allowed": ["AIEP09_9C", "AIEP07_7D", "AIEP11_11A3"],
+    "forbidden": ["AIEP15", "AIEP09_9B1", "AIEP10"],
+    "pins": ["7.2"]
+  },
+  "车辆段失火": {
+    "allowed": ["AIEP10", "AIEP02", "AIEP12"],
+    "forbidden": ["AIEP09_9B1", "AIEP15"]
+  },
+  "隧道火灾": {
+    "allowed": ["AIEP09_9C", "AIEP07_7D", "AIEP11_11A"],
+    "forbidden": ["AIEP15", "AIEP09_9B1", "AIEP10"]
+  },
+
+  "列车追尾": {
+    "allowed": ["AIEP02", "AIEP05", "AIEP06", "AIEP07", "AIEP12"],
+    "forbidden": ["AIEP15", "AIEP09", "AIEP10"]
+  },
+  "列车冲突": {
+    "allowed": ["AIEP02", "AIEP05", "AIEP06", "AIEP07"],
+    "forbidden": ["AIEP15", "AIEP09", "AIEP10"]
+  },
+  "列车脱轨": {
+    "allowed": ["AIEP02", "AIEP06", "AIEP07", "AIEP12"],
+    "forbidden": ["AIEP15", "AIEP09", "AIEP10"],
+    "pins": ["7.2"]
+  },
+  "列车分离": {
+    "allowed": ["AIEP05", "AIEP02", "AIEP07"],
+    "forbidden": ["AIEP15", "AIEP09", "AIEP10"]
+  },
+  "列车迫停": {
+    "allowed": ["AIEP02", "AIEP07", "AIEP12", "AIEP28"],
+    "forbidden": ["AIEP09", "AIEP15"]
+  },
+  "区间烟雾报警": {
+    "allowed": ["AIEP09_9E", "AIEP09_9C", "AIEP07"],
+    "forbidden": ["AIEP15", "AIEP09_9B1", "AIEP10"]
+  },
+
+  "暴雨": {
+    "allowed": ["AIEP27", "AIEP28"],
+    "forbidden": ["AIEP09", "AIEP08", "AIEP15", "AIEP10"],
+    "pins": ["7.2", "14.2.15"]
+  },
+  "暴雨导致列车区间迫停": {
+    "allowed": ["AIEP02", "AIEP07", "AIEP11", "AIEP12", "AIEP14", "AIEP27", "AIEP28"],
+    "forbidden": ["AIEP09", "AIEP08", "AIEP15", "AIEP10", "AIEP06"],
+    "pins": ["7.2", "14.2.15"]
+  },
+  "暴雨导致路基塌陷": {
+    "allowed": ["AIEP02", "AIEP06", "AIEP07", "AIEP27", "AIEP28"],
+    "forbidden": ["AIEP15", "AIEP09", "AIEP10"]
+  },
+  "隧道水淹": {
+    "allowed": ["AIEP11_11A", "AIEP28_28D", "AIEP28_28E", "AIEP07"],
+    "forbidden": ["AIEP09", "AIEP15", "AIEP10"]
+  },
+  "车站水淹": {
+    "allowed": ["AIEP28_28C", "AIEP27", "AIEP12"],
+    "forbidden": ["AIEP09", "AIEP15", "AIEP10"]
+  },
+  "风道水淹": {
+    "allowed": ["AIEP28_28D", "AIEP27", "AIEP11_11A"],
+    "forbidden": ["AIEP09", "AIEP15", "AIEP10"]
+  },
+
+  "暴雪": {
+    "allowed": ["AIEP29", "AIEP27"],
+    "forbidden": ["AIEP28", "AIEP09", "AIEP08"]
+  },
+  "暴雪导致道岔冻结": {
+    "allowed": ["AIEP27", "AIEP29", "AIEP16"],
+    "forbidden": ["AIEP28", "AIEP09", "AIEP15"]
+  },
+  "冻雨导致接触网结冰": {
+    "allowed": ["AIEP11", "AIEP27", "AIEP28"],
+    "forbidden": ["AIEP09", "AIEP15", "AIEP10"]
+  },
+  "台风导致停运": {
+    "allowed": ["AIEP27", "AIEP28", "AIEP18"],
+    "forbidden": ["AIEP09", "AIEP15", "AIEP10"]
+  },
+  "地震": {
+    "allowed": ["AIEP24", "AIEP27"],
+    "forbidden": ["AIEP28", "AIEP29"]
+  },
+
+  "车门异常": {
+    "allowed": ["AIEP16", "AIEP05", "AIEP07"],
+    "forbidden": ["AIEP15", "AIEP09", "AIEP10"]
+  },
+  "信号异常": {
+    "allowed": ["AIEP16", "AIEP20"],
+    "forbidden": ["AIEP15", "AIEP09", "AIEP10"],
+    "pins": ["7.2"]
+  },
+  "区间停电": {
+    "allowed": ["AIEP02", "AIEP07", "AIEP12"],
+    "forbidden": ["AIEP09", "AIEP15"]
+  },
+  "断电": {
+    "allowed": ["AIEP02", "AIEP07", "AIEP11", "AIEP28"],
+    "forbidden": ["AIEP15", "AIEP09", "AIEP10"],
+    "pins": ["7.2"]
+  },
+
+  "恐怖袭击": {
+    "allowed": ["AIEP08", "AIEP17", "AIEP12"],
+    "forbidden": ["AIEP15", "AIEP10"]
+  },
+  "恐吓事件": {
+    "allowed": ["AIEP02", "AIEP08", "AIEP12", "AIEP17"],
+    "forbidden": ["AIEP09", "AIEP15"]
+  },
+  "大客流": {
+    "allowed": ["AIEP18", "AIEP19"],
+    "forbidden": ["AIEP15", "AIEP08"],
+    "pins": ["14.2.15"]
+  },
+  "乘客坠轨": {
+    "allowed": ["AIEP02", "AIEP04", "AIEP07", "AIEP12", "AIEP14"],
+    "forbidden": ["AIEP15", "AIEP09"]
+  },
+
+  "乘客被困": {
+    "allowed": ["AIEP02", "AIEP07", "AIEP12", "AIEP14", "AIEP03"],
+    "forbidden": ["AIEP06"]
+  },
+  "乘客受伤": {
+    "allowed": ["AIEP02", "AIEP03", "AIEP07", "AIEP14"],
+    "forbidden": ["AIEP06"]
+  },
+  "乘客突发疾病": {
+    "allowed": ["AIEP02", "AIEP03", "AIEP12"],
+    "forbidden": ["AIEP06", "AIEP15"]
+  },
+
+  "清人": {
+    "allowed": ["AIEP02", "AIEP07", "AIEP12"],
+    "forbidden": ["AIEP09", "AIEP15"]
+  },
+  "通信中断": {
+    "allowed": ["AIEP02", "AIEP07", "AIEP12"],
+    "forbidden": ["AIEP15", "AIEP09"]
+  }
+}

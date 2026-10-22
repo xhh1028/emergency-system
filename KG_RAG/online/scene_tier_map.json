@@ -1,0 +1,4 @@
+{
+  "_comment": "生成层：仅登记需要覆盖默认 TIER 的场景；未列出的场景一律用默认表。只允许按 action_type 覆盖档号，不允许删档/改档数。设计见 _design_scene_tier_config.md。",
+  "大客流": { "tier_overrides": { "运营调整": 1 } }
+}

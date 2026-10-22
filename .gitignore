@@ -1,0 +1,38 @@
+# Frontend dependencies and build output
+frontend/node_modules/
+frontend/dist/
+
+# Backend build output and runtime uploads
+backend/target/
+backend/uploads/
+backend/backend_run.log
+backend/backend_error.log
+
+# Local Maven runtime and verification output
+tools/maven-runtime/
+.verify-backend/
+
+# Python environments, caches, models and vector stores
+KG_RAG/venv/
+KG_RAG/**/__pycache__/
+KG_RAG/**/*.pyc
+KG_RAG/models/
+KG_RAG/**/models/
+KG_RAG/vector_store/
+KG_RAG/**/vector_store/
+
+# Local credentials and private SQL exports
+backend/.env
+backend/.env.local
+backend/application-local.yml
+backend/database/*.sql
+
+# Local backups and temporary review directories
+_backup_*/
+.tmp-*/
+
+# Keep archived files available locally, but avoid accidentally adding runtime copies
+_archive/**/node_modules/
+_archive/**/target/
+_archive/**/dist/
+_archive/tooling/m2-repository/
